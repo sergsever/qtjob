@@ -1,10 +1,12 @@
+#include <iostream>
 #include "jfind.h"
 #include <QSizePolicy>
 #include <QLayout>
 #include <QFormLayout>
+#include <QMessageBox>
 #
 
-JFind::JFind(QWidget *parent) : QWidget(parent)
+JFind::JFind(QWidget *parent) : QDialog(parent)
 {
 	setup();
 }
@@ -22,18 +24,20 @@ void JFind::setup()
 	QHBoxLayout* corplayout = new QHBoxLayout;
 	QLabel* l = new QLabel("corp:");
 	corplayout->addWidget(l);
-	corp = new QLineEdit;
-	corplayout->addWidget(corp);
+	corp = std::make_unique<QLineEdit>(new QLineEdit);
+	corplayout->addWidget(corp.get());
 	QGridLayout* vlayout = new QGridLayout;
 	vlayout->addItem(corplayout, 0, 0);
-	button = new QPushButton("Find");
+	button = std::make_unique<QPushButton>(new QPushButton);
+	button->setText("Find");
+	connect(button.get(), SIGNAL(released()), this, SLOT(find()));
 	QHBoxLayout* blayout = new QHBoxLayout;
-	blayout->addWidget(button);
+	blayout->addWidget(button.get());
 	vlayout->addItem(blayout,1, 0);
 //	vlayout->addWidget(button.get());
 	this->setLayout(vlayout);
-	setMaximumHeight(100);
-	setMaximumWidth(150);
+	setMaximumHeight(height);
+	setMaximumWidth(widtch);
 //	label_corp->setBuddy(corp.get());
 //	label_corp->setFixedWidth(100);
 //	corp->setFixedWidth(150);
@@ -45,4 +49,13 @@ void JFind::setup()
 
 //	corp->setSizePolicy(QSizePolicy::Fixed);
 //	this->layout()->addWidget(corp);
+}
+
+void JFind::find()
+{
+	std::cout << "Button" << std::endl;
+	QMessageBox box;
+	std::string tofind = corp->text().toUtf8().constData();
+	box.setText(tofind.c_str());
+	box.exec();
 }

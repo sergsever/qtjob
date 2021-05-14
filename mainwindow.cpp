@@ -9,14 +9,15 @@ MainWindow::MainWindow(QWidget *parent)
 	, ui(new Ui::MainWindow)
 {
 	ui->setupUi(this);
-	JFind* jfind = new JFind();
+	JFind* jfind = new JFind(this);
 	QHBoxLayout* layout = new QHBoxLayout;
 //	layout->addWidget(jfind, Qt::AlignCenter);
 //	setLayout(layout);
-	this->layout()->addWidget(jfind);
-	int x = this->width() / 2 -70;
-	int y = this->height() /2 - 50;
-	jfind->move(x,y);
+//	this->layout()->addWidget(jfind);
+//	setCentralWidget(jfind);
+	int x = this->width() / 2 - (JFind::widtch/2);
+	int y = this->height() /2 - (JFind::height/2);
+//	jfind->move(x,y);
 
 
 }
