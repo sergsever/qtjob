@@ -1,6 +1,7 @@
 #ifndef CORP_H
 #define CORP_H
 #include "precompiled.h"
+#include <QxOrm.h>
 class Corp
 {
 public:
@@ -14,6 +15,6 @@ public:
 
 };
 
-QX_REGISTER_HPP_MY_TEST_EXE(Corp, qx::trait::no_base_class_defined, 1)
+QX_REGISTER_HPP(Corp, qx::trait::no_base_class_defined, 1)
 
 #endif // CORP_H

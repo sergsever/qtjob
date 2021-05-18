@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QDateTime>
-#include "QxOrm.h"
+#include <QxOrm.h>
 #include <vector>
 
 #endif // PRECOMPILED_H

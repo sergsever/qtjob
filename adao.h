@@ -2,14 +2,15 @@
 #define ADAO_H
 #include "precompiled.h"
 
-template<class Entity>
+template<typename Entity>
 class ADAO
 {
 public:
-	ADAO();
-virtual ~ADAO();
+	ADAO() {;}
+	virtual ~ADAO(){;}
 std::vector<Entity> getAll();
 std::vector<Entity> find(QString request);
+void add(Entity entity);
 };
 
 #endif // ADAO_H

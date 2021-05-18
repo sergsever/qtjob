@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QDialog>
+#include "data/daocorp.h"
 
 class JFind : public QDialog
 {
@@ -17,6 +18,7 @@ public:
 	static const int height = 100;
 	explicit JFind(QWidget *parent = nullptr);
 protected:
+	std::unique_ptr<DaoCorp> dao;
 	std::unique_ptr<QLineEdit> corp;
 	std::unique_ptr<QPushButton> button;
 	void setup();

@@ -1,6 +1,6 @@
 #include "adao.h"
-
-ADAO::ADAO()
+template<class T>
+ADAO<T>::ADAO()
 {
 
 }

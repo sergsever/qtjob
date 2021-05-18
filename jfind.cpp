@@ -13,7 +13,7 @@ JFind::JFind(QWidget *parent) : QDialog(parent)
 
 void JFind::setup()
 {
-
+		dao = std::make_unique<DaoCorp>();
 //	label_corp = std::make_unique<QLabel>(new QLabel("corp:", this));
 //	corp = std::make_unique<QLineEdit>(new QLineEdit());
 //	corp->setMaximumWidth(100);
@@ -55,7 +55,9 @@ void JFind::find()
 {
 	std::cout << "Button" << std::endl;
 	QMessageBox box;
-	std::string tofind = corp->text().toUtf8().constData();
-	box.setText(tofind.c_str());
+	QString tofind = corp->text();
+	std::vector<Corp> found = dao->findByTitle(tofind);
+	tofind += "count:" + found.size();
+	box.setText(tofind);
 	box.exec();
 }
