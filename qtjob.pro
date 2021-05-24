@@ -1,9 +1,10 @@
 QT       += core gui
 TEMPLATE = app
-TARGET = test
+TARGET = qtjob
 
 LIBS += -L"C:/lib/QxOrm/lib" -lQxOrmd
 QT += sql
+QT += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

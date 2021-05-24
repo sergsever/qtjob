@@ -3,19 +3,31 @@
 #include "QxOrm.h"
 #include "QxOrm_Impl.h"
 
-QX_REGISTER_CPP(Corp)
+Corp::Corp()
+{
+	corp_id = 0;
+}
 
+Corp::~Corp()
+{
+
+}
+
+/*
 namespace qx
 {
-/*
-template<> void register_class(QxClass<Corp>& c)
+
+template<>
+void register_class(QxClass<Corp>& c)
 {
-	c.id(&Corp::corp_id, "corp_id");
+	c.id(&Corp::corp_id, "id");
 	c.data(&Corp::title, "title");
 	c.data(&Corp::added, "added");
 	c.data(&Corp::result, "result");
 	c.data(&Corp::keywords, "keywords");
 	
 }
-*/
+
+
 }
+*/

@@ -1,13 +1,15 @@
+#include "precompiled.h"
 #include <iostream>
 #include "jfind.h"
 #include <QSizePolicy>
 #include <QLayout>
 #include <QFormLayout>
 #include <QMessageBox>
-#
+
 
 JFind::JFind(QWidget *parent) : QDialog(parent)
 {
+
 	setup();
 }
 
@@ -50,14 +52,34 @@ void JFind::setup()
 //	corp->setSizePolicy(QSizePolicy::Fixed);
 //	this->layout()->addWidget(corp);
 }
-
 void JFind::find()
 {
 	std::cout << "Button" << std::endl;
 	QMessageBox box;
 	QString tofind = corp->text();
-	std::vector<Corp> found = dao->findByTitle(tofind);
+	auto found = dao->findByTitle(tofind);
+	if (found.size() != 0 )
+	{
 	tofind += "count:" + found.size();
+	}
+	else
+	{
+
+		tofind = dao->getSqlError().text();
+		if (tofind == "")
+			tofind = corp->text();
+		QDateTime dt = QDateTime::currentDateTime();
+		qDebug() << "tofind: " << tofind << "dt: " << dt;
+		if (tofind == corp->text())
+		{
+			Corp c;
+			c.title = tofind;
+			c.added = dt;
+			c.result = "start";
+			c.keywords = "begining";
+			dao->add(c);
+		}
+	}
 	box.setText(tofind);
 	box.exec();
 }
