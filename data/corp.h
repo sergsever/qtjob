@@ -10,8 +10,8 @@ public:
 	QString result;
 	QString keywords;
 	Corp();
+	Corp(const QSqlQuery& query);
 	virtual ~Corp();
-
 };
 
 //QX_REGISTER_PRIMARY_KEY(corp, long)

@@ -5,6 +5,8 @@
 #include <QLayout>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QStringListModel>
+#include <QAbstractItemModel>
 
 
 JFind::JFind(QWidget *parent) : QDialog(parent)
@@ -36,10 +38,18 @@ void JFind::setup()
 	QHBoxLayout* blayout = new QHBoxLayout;
 	blayout->addWidget(button.get());
 	vlayout->addItem(blayout,1, 0);
+	QHBoxLayout* listlayout = new QHBoxLayout;
+	QLabel* listlabel = new QLabel("Corps:");
+	corpList = std::make_unique<QListView>(new QListView);
+	listlayout->addWidget(listlabel);
+	listlayout->addWidget(corpList.get());
+	vlayout->addItem(listlayout, 2, 0);
+
 //	vlayout->addWidget(button.get());
 	this->setLayout(vlayout);
 	setMaximumHeight(height);
 	setMaximumWidth(widtch);
+	fillList();
 //	label_corp->setBuddy(corp.get());
 //	label_corp->setFixedWidth(100);
 //	corp->setFixedWidth(150);
@@ -82,4 +92,20 @@ void JFind::find()
 	}
 	box.setText(tofind);
 	box.exec();
+}
+
+void JFind::fillList()
+{
+	std::vector<Corp> all = dao->getAll();
+	qDebug() << "fill: all: " << all.size();
+	QStringList list;
+	QStringListModel* model = new QStringListModel;
+///	QObjectList* model = new QObjectList;
+	for(auto s = all.begin(); s != all.end(); s++)
+	{
+		QString item = s->title + " - " + s->result;
+		list.append(item);
+	}
+	model->setStringList(list);
+	corpList->setModel(model);
 }

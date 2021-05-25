@@ -59,12 +59,7 @@ QSqlQuery query(db);
 		query.exec();
 while(query.next())
 {
-	Corp c;
-	c.corp_id = query.value(0).toUInt();
-	c.title = query.value(1).toString();
-	c.added = query.value(2).toDateTime();
-	c.result = query.value(3).toString();
-	c.keywords = query.value(4).toString();
+	Corp c(query);
 	ret.push_back(c);
 
 }
@@ -114,19 +109,15 @@ std::vector<Corp> DaoCorp::findByTitle(QString title)
 	*/
 	std::vector<Corp> ret;
 	QSqlQuery query(db);
-			query.prepare("select corp_id, title, added, result, keywords from corp where title = ':title'");
+			query.prepare("SELECT corp_id, title, added, result, keywords from corp WHERE title=:title");
 	query.bindValue(":title", title);
 	qDebug() << "exec select:";
 	query.exec();
+	sql_err = query.lastError();
+	qDebug() << "error: " << sql_err.text() << "count:" << query.size();
 	while(query.next())
 	{
-		Corp c;
-		c.corp_id = query.value(0).toUInt();
-		c.title = query.value(1).toString();
-		c.added = query.value(2).toDateTime();
-		c.result = query.value(3).toString();
-		c.keywords = query.value(4).toString();
-		qDebug() << "the first row";
+		Corp c(query);
 		ret.push_back(c);
 
 	}

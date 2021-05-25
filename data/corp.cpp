@@ -8,6 +8,15 @@ Corp::Corp()
 	corp_id = 0;
 }
 
+Corp::Corp(const QSqlQuery& query)
+{
+	corp_id = query.value("corp_id").toUInt();
+	title = query.value("title").toString();
+	added = query.value("added").toDateTime();
+	result = query.value("result").toString();
+	keywords = query.value("keywords").toString();
+}
+
 Corp::~Corp()
 {
 
