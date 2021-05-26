@@ -10,19 +10,20 @@
 #include <QDialog>
 #include "data/daocorp.h"
 #include <QListView>
+#include <QTableView>
 
 class JFind : public QDialog
 {
 	Q_OBJECT
 public:
-	static const int widtch = 300;
-	static const int height = 200;
+	static const int widtch = 800;
+	static const int height = 600;
 	explicit JFind(QWidget *parent = nullptr);
 protected:
 	std::unique_ptr<DaoCorp> dao;
 	std::unique_ptr<QLineEdit> corp;
 	std::unique_ptr<QPushButton> button;
-	std::unique_ptr<QListView> corpList;
+	std::unique_ptr<QTableView> corpList;
 	void fillList();
 	void setup();
 private slots:

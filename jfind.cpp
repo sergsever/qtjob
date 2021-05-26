@@ -33,22 +33,22 @@ void JFind::setup()
 	QGridLayout* vlayout = new QGridLayout;
 	vlayout->addItem(corplayout, 0, 0);
 	button = std::make_unique<QPushButton>(new QPushButton);
-	button->setText("Find");
+	button->setText("Add if not exists");
 	connect(button.get(), SIGNAL(released()), this, SLOT(find()));
 	QHBoxLayout* blayout = new QHBoxLayout;
 	blayout->addWidget(button.get());
 	vlayout->addItem(blayout,1, 0);
 	QHBoxLayout* listlayout = new QHBoxLayout;
 	QLabel* listlabel = new QLabel("Corps:");
-	corpList = std::make_unique<QListView>(new QListView);
+	corpList = std::make_unique<QTableView>(new QTableView);
 	listlayout->addWidget(listlabel);
 	listlayout->addWidget(corpList.get());
 	vlayout->addItem(listlayout, 2, 0);
 
 //	vlayout->addWidget(button.get());
 	this->setLayout(vlayout);
-	setMaximumHeight(height);
-	setMaximumWidth(widtch);
+	setMinimumHeight(height);
+	setMinimumWidth(widtch);
 	fillList();
 //	label_corp->setBuddy(corp.get());
 //	label_corp->setFixedWidth(100);
@@ -98,14 +98,22 @@ void JFind::fillList()
 {
 	std::vector<Corp> all = dao->getAll();
 	qDebug() << "fill: all: " << all.size();
-	QStringList list;
-	QStringListModel* model = new QStringListModel;
+//	QStringList list;
+//	QStringListModel* model = new QStringListModel;
+	CorpTableModel* model = new CorpTableModel();
+
 ///	QObjectList* model = new QObjectList;
 	for(auto s = all.begin(); s != all.end(); s++)
 	{
-		QString item = s->title + " - " + s->result;
-		list.append(item);
+//		QString item = s->title + " - " + s->result;
+//		list.append(item);
+		model->add(*s);
 	}
-	model->setStringList(list);
-	corpList->setModel(model);
+
+	qDebug() << "model count: " << model->rowCount();
+	corpList->setIconSize(QSize(0,0));
+	corpList->setCornerButtonEnabled(false);
+
+	corpList->setModel(
+				model);
 }

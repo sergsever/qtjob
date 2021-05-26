@@ -16,6 +16,7 @@ CONFIG += c++11
 
 SOURCES += \
     data/corp.cpp \
+    data/corptablemodel.cpp \
     data/daocorp.cpp \
     jfind.cpp \
     main.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 HEADERS += \
     adao.h \
     data/corp.h \
+    data/corptablemodel.h \
     data/daocorp.h \
     jfind.h \
     mainwindow.h \
