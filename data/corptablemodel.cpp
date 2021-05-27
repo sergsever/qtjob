@@ -23,7 +23,8 @@ void CorpTableModel::add(Corp& corp)
 
 int CorpTableModel::rowCount(const QModelIndex &parent) const
 {
-	return corpList.size();
+	int rows = static_cast<int>(corpList.size());
+	return rows;
 }
 
 int CorpTableModel::columnCount(const QModelIndex &parent) const
@@ -33,29 +34,39 @@ int CorpTableModel::columnCount(const QModelIndex &parent) const
 
 QVariant CorpTableModel::data(const QModelIndex& index, int role ) const
 {
+	QString ret = "empty";
 	switch(index.column())
 	{
 
 		case 0:
-			return QString(std::to_string(corpList.at(index.row()).corp_id).c_str());
+			ret = std::to_string(corpList.at(index.row()).corp_id).c_str();
 
 		break;
 		case 1:
-			return corpList.at(index.row()).title;
+			ret = corpList.at(index.row()).title;
 		break;
 		case 2:
-			return corpList.at(index.row()).added.toString("dd.MM.yyyy");
+			ret = corpList.at(index.row()).added.toString("dd.MM.yyyy");
 		break;
 		case 3:
-			return corpList.at(index.row()).result;
+			ret = corpList.at(index.row()).result;
 		break;
 		case 4:
-			return corpList.at(index.row()).keywords;
+			ret = corpList.at(index.row()).keywords;
 		break;
 
 
 	}
-	return "";
+	qDebug() << "curr role:" << role;
+	if (role != Qt::CheckStateRole)
+	{
+	return ret;
+	}
+	else
+	{
+		qDebug() << "data:role:" << role;
+		return QVariant();
+	}
 }
 
 QModelIndex CorpTableModel::index(int row, int column, const QModelIndex &parent) const
@@ -71,8 +82,10 @@ QModelIndex CorpTableModel::parent(const QModelIndex &index) const
 
 Qt::ItemFlags CorpTableModel::flags(const QModelIndex &index) const
 {
-	Qt::ItemFlags flags;
-	flags &= Qt::ItemIsUserCheckable;
-	flags &= Qt::ItemIsSelectable;
+	Qt::ItemFlags flags = Qt::ItemFlag::NoItemFlags;
+//	flags &= Qt::ItemIsUserCheckable;
+//	flags &= Qt::ItemIsSelectable;
+//	flags &= Qt::ItemIsEnabled;
+
 	return flags;
 }
